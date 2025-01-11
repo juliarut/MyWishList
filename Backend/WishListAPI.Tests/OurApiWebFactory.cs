@@ -33,9 +33,10 @@ namespace WishListAPI.Tests
             var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
             dbContext.Database.EnsureCreated();
         }
-        public async Task DisposeAsync()
+
+        public override async ValueTask DisposeAsync()
         {
-            await _msSqlContainer.DisposeAsync().AsTask(); 
+            await _msSqlContainer.DisposeAsync();
         }
     }
 }
