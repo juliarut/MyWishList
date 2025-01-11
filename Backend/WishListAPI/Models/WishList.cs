@@ -10,7 +10,7 @@ namespace WishListAPI.Models
         [Required(ErrorMessage = "UserId is required")]
         public int UserId { get; set; }
 
-        public User User { get; set; }
+        public User? User { get; set; }
 
         public List<WishListItem> Items { get; set; } = new();
     }

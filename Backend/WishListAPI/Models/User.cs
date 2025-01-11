@@ -9,7 +9,7 @@ namespace WishListAPI.Models
 
         [Required(ErrorMessage = "Username is required")]
         [StringLength(50, ErrorMessage = "Username cannot exceed 50 characters")]
-        public string Username { get; set; }
+        public string? Username { get; set; }
 
         public List<WishList> WishLists { get; set; } = new();
     }

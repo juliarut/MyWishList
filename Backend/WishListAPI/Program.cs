@@ -19,6 +19,7 @@ using (var scope = app.Services.CreateScope())
     var context = services.GetRequiredService<ApplicationDbContext>();
     context.Database.Migrate(); 
     DbSeeder.Seed(context);     
+}
 
 if (app.Environment.IsDevelopment())
 {
@@ -31,4 +32,6 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
-}
+public partial class Program { }
+
+
