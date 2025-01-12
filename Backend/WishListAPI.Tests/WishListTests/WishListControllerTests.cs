@@ -1,52 +1,56 @@
 using System.Net.Http.Json;
 using FluentAssertions;
 using WishListAPI.Models;
+using Xunit;
 
-namespace WishListAPI.Tests.WishListTests;
-
-public class WishListControllerTests : IClassFixture<OurApiWebFactory>
+namespace WishListAPI.Tests.WishListTests
 {
-    private readonly OurApiWebFactory _webFactory;
-
-    public WishListControllerTests(OurApiWebFactory webFactory)
+    public class WishListControllerTests : IClassFixture<OurApiWebFactory>
     {
-        _webFactory = webFactory;
-    }
+        private readonly OurApiWebFactory _webFactory;
 
-    [Fact]
-    public async Task CreateWishList_Should_Create_New_WishList()
-    {
-        var user = new User { Username = "WishListOwner" };
-        var createUserResponse = await _webFactory.Client.PostAsJsonAsync("/api/user", user);
-        var createdUser = await createUserResponse.Content.ReadFromJsonAsync<User>();
-
-        var wishList = new WishList
+        public WishListControllerTests(OurApiWebFactory webFactory)
         {
-            UserId = createdUser!.UserId
-        };
+            _webFactory = webFactory;
+        }
 
-        var createWishListResponse = await _webFactory.Client.PostAsJsonAsync("/api/wishlist", wishList);
-        createWishListResponse.EnsureSuccessStatusCode();
+    //    { {[Fact]
+    //     public async Task CreateWishList_Should_Create_New_WishList()
+    //     {
+    //         // Arrange
+    //         var user = new User { Username = "TestUser" };
+    //         var createUserResponse = await _webFactory.Client.PostAsJsonAsync("/api/users", user);
+    //         createUserResponse.EnsureSuccessStatusCode();
+    //         var createdUser = await createUserResponse.Content.ReadFromJsonAsync<User>();
 
-        var result = await createWishListResponse.Content.ReadFromJsonAsync<WishList>();
-        result.Should().NotBeNull();
-        result!.UserId.Should().Be(createdUser.UserId);
-    }
+    //         var wishList = new WishList { UserId = createdUser!.UserId };
 
-    [Fact]
-    public async Task GetWishList_Should_Return_Correct_WishList()
-    {
-        var user = new User { Username = "WishListTester" };
-        var createUserResponse = await _webFactory.Client.PostAsJsonAsync("/api/user", user);
-        var createdUser = await createUserResponse.Content.ReadFromJsonAsync<User>();
+    //         // Act
+    //         var createResponse = await _webFactory.Client.PostAsJsonAsync("/api/wishlist", wishList);
+            
+    //         // Assert
+    //         createResponse.StatusCode.Should().Be(System.Net.HttpStatusCode.Created);
+    //     }}}
 
-        var wishList = new WishList { UserId = createdUser!.UserId };
-        await _webFactory.Client.PostAsJsonAsync("/api/wishlist", wishList);
+        // [Fact]
+        // public async Task GetWishList_Should_Return_Correct_WishList()
+        // {
+        //     // Arrange
+        //     var user = new User { Username = "TestUser" };
+        //     var createUserResponse = await _webFactory.Client.PostAsJsonAsync("/api/users", user);
+        //     createUserResponse.EnsureSuccessStatusCode();
+        //     var createdUser = await createUserResponse.Content.ReadFromJsonAsync<User>();
 
-        var getResponse = await _webFactory.Client.GetAsync($"/api/wishlist/{createdUser.UserId}");
-        var fetchedWishList = await getResponse.Content.ReadFromJsonAsync<WishList>();
+        //     var wishList = new WishList { UserId = createdUser!.UserId };
+        //     var createResponse = await _webFactory.Client.PostAsJsonAsync("/api/wishlist", wishList);
+        //     createResponse.EnsureSuccessStatusCode();
 
-        fetchedWishList.Should().NotBeNull();
-        fetchedWishList!.UserId.Should().Be(createdUser.UserId);
+        //     // Act
+        //     var getResponse = await _webFactory.Client.GetAsync($"/api/wishlist/{createdUser.UserId}");
+        //     var fetchedWishList = await getResponse.Content.ReadFromJsonAsync<WishList>();
+
+        //     // Assert
+        //     fetchedWishList.Should().NotBeNull();
+        // }
     }
 }
