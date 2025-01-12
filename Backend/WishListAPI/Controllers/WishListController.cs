@@ -5,7 +5,7 @@ using WishListAPI.Models;
 
 namespace WishListAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/wishlist")]
     [ApiController]
     public class WishListController : ControllerBase
     {
@@ -30,63 +30,24 @@ namespace WishListAPI.Controllers
 
             if (wishList == null)
             {
-                return NotFound();
+                return NotFound("WishList not found.");
             }
 
-            return wishList;
+            return Ok(wishList);
         }
 
         [HttpPost]
         public async Task<ActionResult<WishList>> CreateWishList(WishList wishList)
         {
+            var userExists = await _context.Users.AnyAsync(u => u.UserId == wishList.UserId);
+            if (!userExists)
+            {
+                return BadRequest("UserId does not exist.");
+            }
+
             _context.WishLists.Add(wishList);
             await _context.SaveChangesAsync();
-
             return CreatedAtAction(nameof(GetWishList), new { id = wishList.WishListId }, wishList);
-        }
-
-        [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateWishList(int id, WishList wishList)
-        {
-            if (id != wishList.WishListId)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(wishList).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!_context.WishLists.Any(w => w.WishListId == id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
-        }
-
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteWishList(int id)
-        {
-            var wishList = await _context.WishLists.FindAsync(id);
-            if (wishList == null)
-            {
-                return NotFound();
-            }
-
-            _context.WishLists.Remove(wishList);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
         }
     }
 }
