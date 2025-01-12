@@ -1,10 +1,16 @@
-
 export const getCurrentUser = (): string => {
-    const urlParams = new URLSearchParams(window.location.search);
-    return urlParams.get('loggedin') ?? "TestUser";
+    const user = localStorage.getItem('currentUser');
+    return user ? user : "TestUser";
 };
 
 export const isLoggedIn = (): boolean => {
-    const urlParams = new URLSearchParams(window.location.search);
-    return urlParams.has('loggedin');
+    return localStorage.getItem('currentUser') !== null;
+};
+
+export const loginUser = (username: string) => {
+    localStorage.setItem('currentUser', username);
+};
+
+export const logoutUser = () => {
+    localStorage.removeItem('currentUser');
 };
