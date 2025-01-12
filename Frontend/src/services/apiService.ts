@@ -1,23 +1,18 @@
-
 import createClient from 'openapi-fetch';
 import type { paths } from '../types/openapi.d';
 
-
-export const apiClient = createClient<paths>({
+const apiClient = createClient<paths>({
     baseUrl: 'http://localhost:5024/api'
 });
-
 
 export const getUsers = async () => {
     const response = await apiClient.GET('/api/User');
     if (response.response.ok) {
         return response.data; 
     } else {
-        console.error('Error fetching users:', response.error);
         return [];
     }
 };
-
 
 export const createUser = async (username: string) => {
     const response = await apiClient.POST('/api/User', {
@@ -26,7 +21,6 @@ export const createUser = async (username: string) => {
     if (response.response.ok) {
         return response.data;
     } else {
-        console.error('Error creating user:', response.error);
         return null;
     }
 };
@@ -36,11 +30,9 @@ export const getWishLists = async () => {
     if (response.response.ok) {
         return response.data;
     } else {
-        console.error('Error fetching wishlists:', response.error);
         return [];
     }
 };
-
 
 export const getWishListById = async (id: number) => {
     const response = await apiClient.GET('/api/wishlist/{id}', {
@@ -51,16 +43,26 @@ export const getWishListById = async (id: number) => {
     if (response.response.ok) {
         return response.data;
     } else {
-        console.error('Error fetching wishlist:', response.error);
         return null;
     }
 };
 
-export const deleteWishList = async (id: number) => {
-    const response = await apiClient.DELETE('/api/wishlist/{id}', { 
+export const createWishList = async (wishList: { userId: number; wishListName: string; items: [] }) => {
+    const response = await apiClient.POST('/api/wishlist', {
+        body: wishList
     });
-    if (!response.response.ok) {
-        console.error('Failded to delete wishlist:', response.error);
+    if (response.response.ok) {
+        return response.data;
+    } else {
+        return null;
     }
-    return response.response.ok;
 };
+
+// export const deleteWishList = async (id: number) => {
+//     const response = await apiClient.DELETE('/api/wishlist/{id}', {
+//         params: {
+//             path: { id }
+//         }
+//     });
+//     return response.response.ok;
+// };   

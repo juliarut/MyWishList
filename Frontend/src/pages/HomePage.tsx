@@ -1,9 +1,9 @@
 
 const HomePage = () => {
     return (
-        <div>
-            <h1>Welcome to My Wish List!</h1>
-            <p>This is the start of your wish list application.</p>
+        <div className="p-10 text-center">
+            <h1 className="text-4xl font-bold text-blue-700">Welcome to the Wish List App!</h1>
+            <p className="mt-4">Start creating and sharing your wish lists today!</p>
         </div>
     );
 };

@@ -1,37 +1,26 @@
+
 import { Link } from '@tanstack/react-router';
-import { getCurrentUser, isLoggedIn, loginUser, logoutUser } from '../services/authServices';
+import { getCurrentUser, isLoggedIn } from '../services/authServices';
 
 const Navbar = () => {
     const currentUser = getCurrentUser();
     const loggedIn = isLoggedIn();
 
-    const handleLogin = () => {
-        const username = prompt("Enter your username:");
-        if (username) {
-            loginUser(username);
-            window.location.reload();
-        }
-    };
-
-    const handleLogout = () => {
-        logoutUser();
-        window.location.reload();
-    };
-
     return (
-        <nav>
-            <Link to="/">Home</Link> | 
-            <Link to="/wishlist">Wish List</Link> | 
-            <Link to="/statistics">Statistics</Link> | 
-
-            {loggedIn ? (
-                <>
-                    <span>Logged in as: {currentUser} </span>
-                    <button onClick={handleLogout}>Logout</button>
-                </>
-            ) : (
-                <button onClick={handleLogin}>Login</button>
-            )}
+        <nav className="flex justify-between items-center p-4 bg-blue-600 text-white">
+            <div className="text-lg font-bold">Wish List App</div>
+            <div className="space-x-4">
+                <Link to="/" className="hover:underline">Home</Link>
+                <Link to="/wishlist" className="hover:underline">Wish List</Link>
+                <Link to="/statistics" className="hover:underline">Statistics</Link>
+            </div>
+            <div>
+                {loggedIn ? (
+                    <span>Welcome, {currentUser}</span>
+                ) : (
+                    <Link to="/?loggedin=TestUser" className="text-yellow-300 hover:underline">Login</Link>
+                )}
+            </div>
         </nav>
     );
 };
