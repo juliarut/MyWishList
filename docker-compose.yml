@@ -6,5 +6,5 @@ services:
     ports:
       - '1433:1433'
     environment:
-      SA_PASSWORD: 'Password_2_Change_4_Real_Cases_&'
+      SA_PASSWORD: 'Password_2_Change_4_Real_Cases_&;Encrypt=False;TrustServerCertificate=True'
       ACCEPT_EULA: 'Y'
