@@ -1,4 +1,4 @@
-// src/pages/HomePage.tsx
+
 const HomePage = () => {
     return (
         <div>

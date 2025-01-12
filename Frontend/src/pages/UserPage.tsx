@@ -1,9 +1,13 @@
-// src/pages/UserPage.tsx
+
+import { useParams } from '@tanstack/react-router';
+
 const UserPage = () => {
+    const { id } = useParams({ strict: false });
+
     return (
         <div>
-            <h1>User Profile</h1>
-            <p>Welcome to your profile page!</p>
+            <h1>User Page</h1>
+            <p>Welcome, user ID: {id}</p>
         </div>
     );
 };

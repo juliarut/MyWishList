@@ -1,4 +1,3 @@
-
 import { createRouter, RouterProvider, createRoute, createRootRoute } from '@tanstack/react-router';
 import RootPage from '../pages/__root';
 import HomePage from '../pages/HomePage';
@@ -7,12 +6,12 @@ import StatisticsPage from '../pages/StatisticsPage';
 import UserPage from '../pages/UserPage';
 import NotFoundPage from '../pages/NotFoundPage';
 
-
+// ✅ Skapa root-routen som är den övergripande layouten för hela appen.
 const rootRoute = createRootRoute({
     component: RootPage
 });
 
-
+// ✅ Skapa barnrutter för varje sida
 const homeRoute = createRoute({
     getParentRoute: () => rootRoute,
     path: '/',
@@ -33,7 +32,7 @@ const statisticsRoute = createRoute({
 
 const userRoute = createRoute({
     getParentRoute: () => rootRoute,
-    path: '/user',
+    path: '/user/:id',  // Uppdaterat för att hantera dynamiska parametrar
     component: UserPage
 });
 
@@ -43,6 +42,7 @@ const notFoundRoute = createRoute({
     component: NotFoundPage
 });
 
+// ✅ Lägg till alla routes i routeTree
 const routeTree = rootRoute.addChildren([
     homeRoute,
     wishListRoute,
@@ -51,6 +51,7 @@ const routeTree = rootRoute.addChildren([
     notFoundRoute
 ]);
 
+// ✅ Skapa och exportera routern
 const router = createRouter({
     routeTree
 });

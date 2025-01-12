@@ -1,4 +1,4 @@
-// src/pages/NotFoundPage.tsx
+
 const NotFoundPage = () => {
     return (
         <div>

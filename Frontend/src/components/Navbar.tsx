@@ -5,6 +5,10 @@ const Navbar = () => {
     const currentUser = getCurrentUser();
     const loggedIn = isLoggedIn();
 
+    const handleLogout = () => {
+        window.location.href = '/';
+    };
+
     return (
         <nav>
             <Link to="/">Home</Link> | 
@@ -13,8 +17,8 @@ const Navbar = () => {
             
             {loggedIn ? (
                 <>
-                    <span>Logged in as: {currentUser}</span>
-                    <Link to="/">Logout</Link>
+                    <span>Logged in as: {currentUser} | </span>
+                    <button onClick={handleLogout}>Logout</button>
                 </>
             ) : (
                 <Link to="/?loggedin=TestUser">Login</Link>
@@ -22,4 +26,5 @@ const Navbar = () => {
         </nav>
     );
 };
+
 export default Navbar;
